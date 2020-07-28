@@ -42,11 +42,23 @@ class SiteImporterSitePreview extends React.Component {
 	};
 
 	componentDidMount() {
-		// TODO: We might want to move this state handling to redux.
+		this.loadSitePreview();
+	}
+
+	componentDidUpdate( prevProps ) {
+		if ( this.props.siteURL === prevProps.siteURL ) {
+			return;
+		}
 		this.loadSitePreview();
 	}
 
 	loadSitePreview = () => {
+		// TODO: We might want to move this state handling to redux.
+
+		if ( ! this.props.siteURL ) {
+			return;
+		}
+
 		this.setState( { loadingPreviewImage: true, previewStartTime: Date.now() } );
 
 		loadmShotsPreview( {
